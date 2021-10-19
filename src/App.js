@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Login from "./Components/Login";
 import Signup from "./Components/Signup";
-import React, { useState } from "react";
+import React from "react";
 import Home from "./Components/Home";
 import Signout from "./Components/Signout";
 
@@ -80,7 +80,7 @@ class App extends React.Component {
           </nav>
 
           <div className="auth-wrapper">
-            <div className="auth-inner">
+            <div className={"auth-inner "+(this.state.isAuthenticated?'main-container':'')}>
               <Switch>
                 {!this.state.isAuthenticated && (
                   <>

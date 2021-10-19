@@ -42,7 +42,9 @@ body, html, .App, #root, .auth-wrapper {
   border-radius: 15px;
   transition: all .3s;
 }
-
+.main-container{
+  width: 80%;
+}
 .auth-wrapper .form-control:focus {
   border-color: #167bff;
   box-shadow: none;
