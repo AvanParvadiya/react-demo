@@ -40,7 +40,7 @@ class App extends React.Component {
           <nav className="navbar navbar-expand-lg navbar-light fixed-top">
             <div className="container">
               <Link className="navbar-brand" to={"/sign-in"}>
-                positronX.io
+                avanParvadiya.io
               </Link>
               <div
                 className="collapse navbar-collapse"
@@ -64,18 +64,24 @@ class App extends React.Component {
                   )}
 
                   {this.state.isAuthenticated && (
-                    <li className="nav-item">
-                      <Link className="nav-link" to={"/Home"}>
-                        Home
-                      </Link>
-                    </li>
-                  )}
-                  {this.state.isAuthenticated && (
-                    <li className="nav-item">
-                      <Link className="nav-link" to={"/sign-out"}>
-                        Log out
-                      </Link>
-                    </li>
+                    <>
+                      <li className="nav-item">
+                        <Link className="nav-link" to={"/Home"}>
+                          Home
+                        </Link>
+                      </li>
+
+                      <li className="nav-item">
+                        <Link className="nav-link" to={"/sign-out"}>
+                          Log out
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <div className="nav-link">
+                          {this.state.userData.email}
+                        </div>
+                      </li>
+                    </>
                   )}
                 </ul>
               </div>

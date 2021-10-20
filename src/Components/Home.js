@@ -5,20 +5,31 @@ export default class Home extends React.Component {
     super(props);
     this.state = {
       usersData: [],
+      filterData: [],
     };
+    this.search = this.search.bind(this);
   }
   componentDidMount() {
     fetch("http://localhost:8080/api/demo/")
       .then((res) => res.json())
-      .then((res) => this.setState({ usersData: res }));
-      // this.setState({ usersData: res })
-    // console.log( this.state.usersData);
+      .then((res) => this.setState({ usersData: res, filterData: res }));
+  }
+  search(e) {
+    const filter = this.state.usersData.filter(
+      (data) =>
+        data.firstname.toUpperCase().includes(e.target.value.toUpperCase()) ||
+        data.lastname.toUpperCase().includes(e.target.value.toUpperCase()) ||
+        data.email.toUpperCase().includes(e.target.value.toUpperCase())
+    );
+    this.setState({ filterData: filter });
   }
   render() {
     return (
       <>
         <div className="home">
-          Hellow {this.props.email}
+          <div className="search">
+            <input type="text" onChange={this.search} placeholder="Search" />
+          </div>
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -30,25 +41,16 @@ export default class Home extends React.Component {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>564896464</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                <td>564896464</td>
-              </tr>
-              {this.state.usersData.map((res) => (
+              {this.state.filterData.length === 0 && (
+                <tr>
+                  <td colSpan="5">No records found</td>
+                </tr>
+              )}
+              {this.state.filterData.map((res, index) => (
                 <tr key={res.id}>
-                  <td>3</td>
-                  <td >{res.firstname}</td>
+                  <td>{index + 1}</td>
                   <td>{res.firstname}</td>
+                  <td>{res.lastname}</td>
                   <td>{res.email}</td>
                   <td>{res.password}</td>
                 </tr>
