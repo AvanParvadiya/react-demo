@@ -1,5 +1,5 @@
 import React from "react";
-
+import API from "../API/API";
 export default class Signup extends React.Component {
   constructor() {
     super();
@@ -13,11 +13,13 @@ export default class Signup extends React.Component {
       lastNameValid: true,
       emailValid: true,
       passwordValid: true,
+      disableSubmit: true,
     };
     this.firstNameChange = this.firstNameChange.bind(this);
     this.lastNameChange = this.lastNameChange.bind(this);
     this.emailChange = this.emailChange.bind(this);
     this.passwordChange = this.passwordChange.bind(this);
+    this.onSubmitForm = this.onSubmitForm.bind(this);
   }
   validateEmail(email) {
     const re =
@@ -25,7 +27,20 @@ export default class Signup extends React.Component {
     return re.test(email);
   }
   validateFields(fields) {
-    return fields.length === 0 ? true : false;
+    return fields.length !== 0 ? true : false;
+  }
+  submitEnable() {
+    if (
+      this.state.firstName.length > 0 &&
+      this.state.lastName.length > 0 &&
+      this.state.email.length > 0 &&
+      this.validateEmail(this.state.email) &&
+      this.state.password.length > 0
+    ) {
+      this.setState({ disableSubmit: false });
+    } else {
+      this.setState({ disableSubmit: true });
+    }
   }
   firstNameChange(e) {
     const firstName = e.target.value;
@@ -35,9 +50,9 @@ export default class Signup extends React.Component {
       firstName: e.target.value,
       firstNameValid: validateFirstName,
     });
+    this.submitEnable();
   }
   lastNameChange(e) {
-    console.log(e.target.value);
     const lastName = e.target.value;
     const validateLastName = this.validateFields(lastName);
 
@@ -45,6 +60,7 @@ export default class Signup extends React.Component {
       lastName: e.target.value,
       lastNameValid: validateLastName,
     });
+    this.submitEnable();
   }
   emailChange(e) {
     const email = e.target.value;
@@ -54,6 +70,7 @@ export default class Signup extends React.Component {
       email: e.target.value,
       emailValid: emailValid,
     });
+    this.submitEnable();
   }
   passwordChange(e) {
     const password = e.target.value;
@@ -63,9 +80,26 @@ export default class Signup extends React.Component {
       password: e.target.value,
       passwordValid: passwordValid,
     });
+    this.submitEnable();
   }
-  onSubmitForm(e){
-      e.preventDefault();
+  onSubmitForm(e) {
+    e.preventDefault();
+    const userData = {
+      firstname: this.state.firstName,
+      lastname: this.state.lastName,
+      email: this.state.email,
+      password: this.state.password,
+    };
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData),
+    };
+    fetch(API.API_URL + API.ADD_USER, requestOptions)
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+    
   }
   render() {
     return (
@@ -130,12 +164,17 @@ export default class Signup extends React.Component {
         </div>
 
         <div className="form-group">
-          {!this.state.emailValid && (
+          {!this.state.passwordValid && (
             <label className="error">Please enter password</label>
           )}
         </div>
 
-        <button type="submit" className="btn btn-primary btn-block" onClick={this.onSubmitForm}>
+        <button
+          type="button"
+          className="btn btn-primary btn-block"
+          disabled={this.state.disableSubmit}
+          onClick={this.onSubmitForm}
+        >
           Sign Up
         </button>
         <p className="forgot-password text-right">
