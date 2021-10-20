@@ -1,6 +1,7 @@
 // import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Login from "./Components/Login";
@@ -10,6 +11,7 @@ import Home from "./Components/Home";
 import Signout from "./Components/Signout";
 
 class App extends React.Component {
+  Home = React.lazy(() => import("./Components/Home"));
   constructor() {
     super();
     this.state = {
@@ -19,15 +21,15 @@ class App extends React.Component {
     this.setAuthenticationHandler = this.setAuthenticationHandler.bind(this);
   }
 
-  setAuthenticationHandler(email,password) {
-    console.log(email,password);
+  setAuthenticationHandler(email, password) {
+    console.log(email, password);
     this.setState({ isAuthenticated: true });
     this.setState({
-      userData:{
-        email:email,
-        password:password
-      }
-    })
+      userData: {
+        email: email,
+        password: password,
+      },
+    });
   }
 
   render() {
@@ -80,7 +82,12 @@ class App extends React.Component {
           </nav>
 
           <div className="auth-wrapper">
-            <div className={"auth-inner "+(this.state.isAuthenticated?'main-container':'')}>
+            <div
+              className={
+                "auth-inner " +
+                (this.state.isAuthenticated ? "main-container" : "")
+              }
+            >
               <Switch>
                 {!this.state.isAuthenticated && (
                   <>
@@ -97,7 +104,7 @@ class App extends React.Component {
                 {this.state.isAuthenticated && (
                   <>
                     <Route path="/Home">
-                      <Home email={this.state.userData.email}/>
+                      <Home email={this.state.userData.email} />
                     </Route>
 
                     <Route path="/Signout">
