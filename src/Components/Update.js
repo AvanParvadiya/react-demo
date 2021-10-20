@@ -63,13 +63,14 @@ export default class Update extends React.Component {
   }
   firstNameChange(e) {
     console.log(this.state.updateUserInfo);
-    const firstname = e.target.value;
-    const validateFirstName = this.validateFields(firstname);
-    this.setState({
-      updateUserInfo: { firstname: e.target.value },
-      firstNameValid: validateFirstName,
-    });
-    this.submitEnable();
+    const firstnameValue = e.target.value;
+    const validateFirstName = this.validateFields(firstnameValue);
+    this.setState((prevstate) => ({
+      ...prevstate,
+      firstname:firstnameValue
+    }));
+    
+    // this.submitEnable();
   }
   lastNameChange(e) {
     const lastName = e.target.value;
