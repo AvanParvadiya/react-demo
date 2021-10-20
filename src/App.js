@@ -21,15 +21,16 @@ class App extends React.Component {
     this.setAuthenticationHandler = this.setAuthenticationHandler.bind(this);
   }
 
-  setAuthenticationHandler(email, password) {
-    console.log(email, password);
-    this.setState({ isAuthenticated: true });
-    this.setState({
-      userData: {
-        email: email,
-        password: password,
-      },
-    });
+  setAuthenticationHandler(userCredencials) {
+    if (userCredencials.id !== undefined) {
+      this.setState({ isAuthenticated: true });
+      this.setState({
+        userData: {
+          email: userCredencials.email,
+          password: userCredencials.password,
+        },
+      });
+    }
   }
 
   render() {

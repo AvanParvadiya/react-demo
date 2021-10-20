@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from "react-router";
 import API from "../API/API";
 export default class Signup extends React.Component {
   constructor() {
@@ -8,12 +9,12 @@ export default class Signup extends React.Component {
       lastName: "",
       email: "",
       password: "",
-
       firstNameValid: true,
       lastNameValid: true,
       emailValid: true,
       passwordValid: true,
       disableSubmit: true,
+      redirect: false,
     };
     this.firstNameChange = this.firstNameChange.bind(this);
     this.lastNameChange = this.lastNameChange.bind(this);
@@ -45,7 +46,6 @@ export default class Signup extends React.Component {
   firstNameChange(e) {
     const firstName = e.target.value;
     const validateFirstName = this.validateFields(firstName);
-
     this.setState({
       firstName: e.target.value,
       firstNameValid: validateFirstName,
@@ -98,10 +98,11 @@ export default class Signup extends React.Component {
     };
     fetch(API.API_URL + API.ADD_USER, requestOptions)
       .then((response) => response.json())
-      .then((data) => console.log(data));
-    
+      .then((data) => this.setState({ redirect: true }));
   }
   render() {
+    const { redirect } = this.state;
+    if (redirect) return <Redirect to="/sign-in" />;
     return (
       <form>
         <h3>Sign Up</h3>
