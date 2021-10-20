@@ -3,6 +3,7 @@ const API = {
   GET_ALL_USER: "/api/demo",
   ADD_USER: "demo",
   LOG_IN:"demo/login",
+  GET_USER_WITH_ID:'demo/',
   DELETE_USER_WITH_ID: "/",
   DELETE_ALL_USER: "/",
 };

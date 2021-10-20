@@ -1,5 +1,6 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
+import { Link } from "react-router-dom";
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -48,11 +49,14 @@ export default class Home extends React.Component {
               )}
               {this.state.filterData.map((res, index) => (
                 <tr key={res.id}>
-                  <td>{index + 1}</td>
-                  <td>{res.firstname}</td>
-                  <td>{res.lastname}</td>
-                  <td>{res.email}</td>
-                  <td>{res.password}</td>
+                  
+                    <td>{index + 1}</td>
+                    <td>{res.firstname}</td>
+                    <td>{res.lastname}</td>
+                    <td>{res.email}</td>
+                    <td>{res.password}</td>
+                    <td><Link to={"/update/"+res.id} >Update</Link></td>
+                  
                 </tr>
               ))}
             </tbody>

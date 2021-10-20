@@ -9,6 +9,7 @@ import Signup from "./Components/Signup";
 import React from "react";
 import Home from "./Components/Home";
 import Signout from "./Components/Signout";
+import Update from "./Components/Update";
 
 class App extends React.Component {
   Home = React.lazy(() => import("./Components/Home"));
@@ -113,7 +114,9 @@ class App extends React.Component {
                     <Route path="/Home">
                       <Home email={this.state.userData.email} />
                     </Route>
-
+                    <Route path="/update/:id">
+                      <Update></Update>
+                    </Route>
                     <Route path="/Signout">
                       <Signout />
                     </Route>
